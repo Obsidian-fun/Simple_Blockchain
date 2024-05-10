@@ -1,7 +1,6 @@
 # Simple Blockchain
 
-![Ancient Dodge](https://live.staticflickr.com/65535/52709987564_27a23e01f1.jpg
-Ancient Dodge)
+![Ancient Dodge](https://live.staticflickr.com/65535/52709987564_27a23e01f1.jpg)
 
 
 
