@@ -17,6 +17,8 @@ func main() {
 
 	r := mux.NewRouter();
 	r.HandleFunc("/", ServeHTTP).Methods("GET");
+	r.HandleFunc("/",).Methods("POST");
+	r.HandleFunc("/new", newBook).Methods("POST");
 
 	http.ListenAndServe(":3000",r);
 }
