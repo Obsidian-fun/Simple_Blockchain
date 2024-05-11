@@ -3,8 +3,8 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
-	"time"
 	"github.com/gorilla/mux"
 )
 
@@ -13,7 +13,6 @@ type book struct {
 	title        string;
 	author       string;
 	ISBN         int;
-	PublishDate  Time.Now();
 }
 
 func getBlockchain(w http.ResponseWriter, r *http.Request){
@@ -28,7 +27,7 @@ func main() {
 	r.HandleFunc("/", writeBlock).Methods("POST");
 	r.HandleFunc("/new", newBook).Methods("POST");
 
-	http.ListenAndServe(":3000",r);
+	log.Fatal(http.ListenAndServe(":3000",r));
 }
 
 
