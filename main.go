@@ -15,9 +15,10 @@ type Blockchain struct {
 }
 
 type BookCheckout struct {
-	user         
-	checkoutDate 
-	isGenesis    
+	BookID        string;
+	User          string;
+	CheckoutDate  string;
+	isGenesis     bool;
 }
 
 
