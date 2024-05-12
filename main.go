@@ -4,7 +4,8 @@ package main
 import (
 	"fmt"
 	"log"
-	"encoding/json"
+	"encoding/json"	// To parse POST requests.
+	"crypto/md5"		// For Book ID
 
 	"net/http"
 	"github.com/gorilla/mux"
@@ -44,7 +45,16 @@ var Blockchain *Blockchain;
 func newBook(w http.ResponseWriter, r *http.Request){
 	var book Book;
 
-	if err := json.NewDecoder(r.Body);
+	if err := json.NewDecoder(r.Body).decode(&book); err != nil {
+		log.Printf("New book not generated: %v",err);
+		w.Write([]byte("could not create new book"));
+		return;
+	}
+
+	h := md5.New();
+	io.WriteString();
+
+
 
 }
 
