@@ -15,17 +15,18 @@ type Blockchain struct {
 }
 
 type BookCheckout struct {
-	user          string;
-	checkoutDate  time;
-	isGenesis     bool;
+	user         
+	checkoutDate 
+	isGenesis    
 }
 
 
 type Book struct {
-	id           int;
-	title        string;
-	author       string;
-	ISBN         int;
+	ID           string;
+	Title        string;
+	Author       string;
+	PublishDate  string;
+	ISBN         string;
 }
 
 func getBlockchain(w http.ResponseWriter, r *http.Request){
