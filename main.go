@@ -22,11 +22,11 @@ type BookCheckout struct {
 
 
 type Book struct {
-	ID           string;
-	Title        string;
-	Author       string;
-	PublishDate  string;
-	ISBN         string;
+	ID           string;	`json:"id:"`
+	Title        string;	`json:"title:"`
+	Author       string;	`json:"author:`
+	PublishDate  string;	`json:"publish_date"`
+	ISBN         string;	`json:"isbn:"`
 }
 
 func getBlockchain(w http.ResponseWriter, r *http.Request){
