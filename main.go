@@ -8,6 +8,8 @@ import (
 	"crypto/md5"		// For Book ID
 	"io"
 	"time"
+	"encoding/hex"
+	"crypto/sha256sum"
 	"net/http"
 
 	"github.com/gorilla/mux"
