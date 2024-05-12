@@ -9,6 +9,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type Block struct {
+	Pos           int;
+	Data          BookCheckout;  `Data  is  an  instance  of  BookCheckout  struct`
+	TimeStamp     string;
+	Hash          string;
+	PreviousHash  string;
+}
+
 type Blockchain struct {
 	blocks []*Block
 
