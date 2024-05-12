@@ -6,8 +6,10 @@ import (
 	"log"
 	"encoding/json"	// To parse POST requests.
 	"crypto/md5"		// For Book ID
-
+	"io"
+	"time"
 	"net/http"
+
 	"github.com/gorilla/mux"
 )
 
@@ -52,8 +54,8 @@ func newBook(w http.ResponseWriter, r *http.Request){
 	}
 
 	h := md5.New();
-	io.WriteString();
-
+	io.WriteString(h, book.ISBN, book.PublishDate);
+	book.ID = fmt.Sprintf("%x", h.Sum(nil));
 
 
 }
