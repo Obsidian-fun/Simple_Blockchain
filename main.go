@@ -4,11 +4,24 @@ package main
 import (
 	"fmt"
 	"log"
+	"time"
 	"net/http"
 	"github.com/gorilla/mux"
 )
 
-type book struct {
+type Blockchain struct {
+	blocks []*Block
+
+}
+
+type BookCheckout struct {
+	user          string;
+	checkoutDate  time;
+	isGenesis     bool;
+}
+
+
+type Book struct {
 	id           int;
 	title        string;
 	author       string;
