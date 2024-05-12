@@ -4,6 +4,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"encoding/json"
+
 	"net/http"
 	"github.com/gorilla/mux"
 )
@@ -40,6 +42,8 @@ type Book struct {
 var Blockchain *Blockchain;
 
 func newBook(w http.ResponseWriter, r *http.Request){
+	var book Book;
+	
 
 }
 
