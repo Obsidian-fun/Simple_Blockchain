@@ -45,6 +45,12 @@ type Book struct {
 // Variable used to store all the created blocks.
 var blockchain *Blockchain;
 
+
+func (bc *Blockchain)AddBlock(data BookCheckout) {
+
+
+}
+
 func writeBlock(w http.ResponseWriter, r *http.Request) {
 	var checkoutItem BookCheckout;
 
@@ -55,6 +61,7 @@ func writeBlock(w http.ResponseWriter, r *http.Request) {
 		return;
 	}
 
+	blockchain.AddBlock(checkoutItem);
 
 }
 
