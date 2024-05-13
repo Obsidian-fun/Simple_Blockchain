@@ -46,6 +46,14 @@ type Book struct {
 var blockchain *Blockchain;
 
 
+func CreateBlock(prevBlock *Block, checkoutItem BookCheckout) *Block {
+	block := &Block{}; // Dereference * Block
+	block.Pos = prevBlock.Pos + 1;
+	block.TimeStamp = time.Now().String();
+	block.PreviousHash = prevBlock.Hash
+
+}
+
 func (bc *Blockchain)AddBlock(data BookCheckout) {
 	prevBlock := bc.blocks[len(bc.blocks)-1];
 
