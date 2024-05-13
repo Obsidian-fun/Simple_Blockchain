@@ -9,7 +9,7 @@ import (
 	"io"
 	"time"
 	"encoding/hex"
-	"crypto/sha256sum"
+	"crypto/sha256"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -29,37 +29,41 @@ type Blockchain struct {
 }
 
 type BookCheckout struct {
-	BookID        string;  `json:"book_id"`
-	User          string;  `json:"user"`
-	CheckoutDate  string;  `json:"checkout_date"`
-	isGenesis     bool;    `json:"is_genesis"`
+	BookID        string;  //`json:"book_id"`
+	User          string;  //`json:"user"`
+	CheckoutDate  string;  //`json:"checkout_date"`
+	isGenesis     bool;    //`json:"is_genesis"`
 }
 
 type Book struct {
-	ID           string;	`json:"id"`
-	Title        string;	`json:"title"`
-	Author       string;	`json:"author`
-	PublishDate  string;	`json:"publish_date"`
-	ISBN         string;	`json:"isbn"`
+	ID           string;	//`json:"id"`
+	Title        string;	//`json:"title"`
+	Author       string;	//`json:"author`
+	PublishDate  string;	//`json:"publish_date"`
+	ISBN         string;	//`json:"isbn"`
 }
 
 // Variable used to store all the created blocks.
-var Blockchain *Blockchain;
+var blockchain *Blockchain;
 
 func newBook(w http.ResponseWriter, r *http.Request){
 	var book Book;
 
-	if err := json.NewDecoder(r.Body).decode(&book); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&book); err != nil {
 		log.Printf("New book not generated: %v",err);
 		w.Write([]byte("could not create new book"));
 		return;
 	}
 
 	h := md5.New();
-	io.WriteString(h, book.ISBN, book.PublishDate);
+	io.WriteString(h, book.ISBN + book.PublishDate);   // Create a hash of ISBN and date published
 	book.ID = fmt.Sprintf("%x", h.Sum(nil));
 
-
+	resp, err := json.MarshalIndent(book, "", " ");
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError);
+		log.Printf("FAILED: JSON Marshall");
+	}
 }
 
 
