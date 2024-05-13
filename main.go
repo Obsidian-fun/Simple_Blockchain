@@ -48,13 +48,13 @@ var blockchain *Blockchain;
 func writeBlock(w http.ResponseWriter, r *http.Request) {
 	var checkoutItem BookCheckout;
 
-	if err := json.NewDecoder(r.Body).Decode(&checoutItem); err != nil {
+	if err := json.NewDecoder(r.Body).Decode(&checkoutItem); err != nil {
+		w.WriteHeader(http.StatusInternalServerError);
 		log.Printf("Book Checkout not processed: %v",err);
 		w.Write([]byte("Could not process transaction"));
 		return;
 	}
 
-	
 
 }
 
@@ -62,6 +62,7 @@ func newBook(w http.ResponseWriter, r *http.Request){
 	var book Book;
 
 	if err := json.NewDecoder(r.Body).Decode(&book); err != nil {
+		w.WriteHeader(http.StatusInternalServerError);
 		log.Printf("New book not generated: %v",err);
 		w.Write([]byte("could not create new book"));
 		return;
