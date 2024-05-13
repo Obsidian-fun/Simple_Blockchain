@@ -63,7 +63,13 @@ func newBook(w http.ResponseWriter, r *http.Request){
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError);
 		log.Printf("FAILED: JSON Marshall");
+		w.Write([]byte("Could not save BookID"));
+		return ;
 	}
+
+	w.WriteHeader(http.StatusOK);
+	w.Write(resp);
+
 }
 
 
