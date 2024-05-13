@@ -25,26 +25,38 @@ type Block struct {
 
 type Blockchain struct {
 	blocks []*Block
-
 }
 
 type BookCheckout struct {
-	BookID        string;  //`json:"book_id"`
-	User          string;  //`json:"user"`
-	CheckoutDate  string;  //`json:"checkout_date"`
-	isGenesis     bool;    //`json:"is_genesis"`
+	BookID        string	`json:"book_id"`
+	User          string	`json:"user"`
+	CheckoutDate  string	`json:"checkout_date"`
+	isGenesis       bool	`json:"is_genesis"`
 }
 
 type Book struct {
-	ID           string;	//`json:"id"`
-	Title        string;	//`json:"title"`
-	Author       string;	//`json:"author`
-	PublishDate  string;	//`json:"publish_date"`
-	ISBN         string;	//`json:"isbn"`
+	ID           string		`json:"id"`
+	Title        string		`json:"title"`
+	Author       string		`json:"author`
+	PublishDate  string		`json:"publish_date"`
+	ISBN         string		`json:"isbn"`
 }
 
 // Variable used to store all the created blocks.
 var blockchain *Blockchain;
+
+func writeBlock(w http.ResponseWriter, r *http.Request) {
+	var checkoutItem BookCheckout;
+
+	if err := json.NewDecoder(r.Body).Decode(&checoutItem); err != nil {
+		log.Printf("Book Checkout not processed: %v",err);
+		w.Write([]byte("Could not process transaction"));
+		return;
+	}
+
+	
+
+}
 
 func newBook(w http.ResponseWriter, r *http.Request){
 	var book Book;
@@ -69,7 +81,6 @@ func newBook(w http.ResponseWriter, r *http.Request){
 
 	w.WriteHeader(http.StatusOK);
 	w.Write(resp);
-
 }
 
 
@@ -81,9 +92,9 @@ func main() {
 	fmt.Println("Hello World!");
 
 	r := mux.NewRouter();
-	r.HandleFunc("/", getBlockchain).Methods("GET");
-	r.HandleFunc("/", writeBlock).Methods("POST");
-	r.HandleFunc("/new", newBook).Methods("POST");
+	r.HandleFunc("/", getBlockchain).Methods("GET");  // Get all blocks in the blockchain
+	r.HandleFunc("/", writeBlock).Methods("POST");    // Write a transaction into a block
+	r.HandleFunc("/new", newBook).Methods("POST");    // Create a new BookID
 
 	log.Fatal(http.ListenAndServe(":3000",r));
 }
