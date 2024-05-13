@@ -47,8 +47,13 @@ var blockchain *Blockchain;
 
 
 func (bc *Blockchain)AddBlock(data BookCheckout) {
+	prevBlock := bc.blocks[len(bc.blocks)-1];
 
+	block := CreateBlock(prevBlock, data);
 
+	if validBlock(block, prevBlock) {
+		bc.blocks = append(bc.blocks, block);
+	}
 }
 
 func writeBlock(w http.ResponseWriter, r *http.Request) {
