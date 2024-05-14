@@ -127,12 +127,12 @@ func getBlockchain(w http.ResponseWriter, r *http.Request){
 }
 
 func GenesisBlock() *Block {
-	return CreateBlock
+	return CreateBlock(&Block{}, BookCheckout{isGenesis:true})
 
 }
 
 func NewBlockchain() *Blockchain {
-	return &Blockchain{[]*Block(&GenesisBlock())};
+	return &Blockchain{[]*Block{GenesisBlock()}};
 }
 
 func main() {
