@@ -49,12 +49,16 @@ var blockchain *Blockchain;
 func (b *Block)generateHash(){
 	bytes, _ := json.Marshal(b.Data);
 
-	data := string(b.Pos) + b.TimeStamp + string(bytes) + b.PrevHash;
+	data := string(b.Pos) + b.TimeStamp + string(bytes) + b.PreviousHash;
 
 	hash := sha256.New();
 	hash.Write([]byte(data));
 	b.Hash = hex.EncodeToString(hash.Sum(nil));
 
+}
+
+func validBlock(block *Block, PrevBlock *Block){
+	fmt.Println("Goober");
 }
 
 func CreateBlock(prevBlock *Block, checkoutItem BookCheckout) *Block {
@@ -122,8 +126,18 @@ func getBlockchain(w http.ResponseWriter, r *http.Request){
 	fmt.Fprintf(w,"Welcome to port %d!\n",3000);
 }
 
+func GenesisBlock() *Block {
+	return CreateBlock
+
+}
+
+func NewBlockchain() *Blockchain {
+	return &Blockchain{[]*Block(&GenesisBlock())};
+}
+
 func main() {
-	fmt.Println("Hello World!");
+
+	var Blockchain = NewBlockchain();
 
 	r := mux.NewRouter();
 	r.HandleFunc("/", getBlockchain).Methods("GET");  // Get all blocks in the blockchain
