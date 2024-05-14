@@ -140,7 +140,14 @@ func newBook(w http.ResponseWriter, r *http.Request){
 
 
 func getBlockchain(w http.ResponseWriter, r *http.Request){
-	fmt.Fprintf(w,"Welcome to port %d!\n",3000);
+	jbytes, err := json.MarshalIndent(blockchain.blocks,""," ");
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError);
+		json.NewEncoder(w).Encode(err);
+		return;
+	}
+
+	io.WriteString(w, string(jbytes));
 }
 
 func GenesisBlock() *Block {
@@ -164,11 +171,13 @@ func main() {
 
 	go func() {
 		for _, block := range blockchain.blocks{
-			fmt.Printf("Previous Hash: %x\n", block.PrevHash);
+			fmt.Printf("Previous Hash: %x\n", block.PreviousHash);
 			bytes, _ := json.MarshalIndent(block.Data,""," ");
-			fmt.Printf("Data:%v\n");
+			fmt.Printf("Data:%v\n", string(bytes));
+			fmt.Printf("Hash:%x\n", block.Hash);
+			fmt.Println();
 		}
-	}
+	}()
 
 
 	log.Fatal(http.ListenAndServe(":3000",r));
