@@ -45,7 +45,6 @@ type Book struct {
 // Variable used to store all the created blocks.
 var blockchain *Blockchain;
 
-
 func (b *Block)generateHash(){
 	bytes, _ := json.Marshal(b.Data);
 
@@ -57,9 +56,6 @@ func (b *Block)generateHash(){
 
 }
 
-func validBlock(block *Block, PrevBlock *Block){
-	fmt.Println("Goober");
-}
 
 func CreateBlock(prevBlock *Block, checkoutItem BookCheckout) *Block {
 	block := &Block{}; // Dereference * Block
@@ -80,6 +76,12 @@ func (bc *Blockchain) AddBlock(data BookCheckout) {
 		bc.blocks = append(bc.blocks, block);
 	}
 }
+
+func validBlock(block *Block, PrevBlock *Block){
+	fmt.Println("Goober");
+}
+
+
 
 func writeBlock(w http.ResponseWriter, r *http.Request) {
 	var checkoutItem BookCheckout;
