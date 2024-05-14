@@ -46,15 +46,28 @@ type Book struct {
 var blockchain *Blockchain;
 
 
+func (b *Block)generateHash(){
+	bytes, _ := json.Marshal(b.Data);
+
+	data := string(b.Pos) + b.TimeStamp + string(bytes) + b.PrevHash;
+
+	hash := sha256.New();
+	hash.Write([]byte(data));
+	b.Hash = hex.EncodeToString(hash.Sum(nil));
+
+}
+
 func CreateBlock(prevBlock *Block, checkoutItem BookCheckout) *Block {
 	block := &Block{}; // Dereference * Block
 	block.Pos = prevBlock.Pos + 1;
 	block.TimeStamp = time.Now().String();
 	block.PreviousHash = prevBlock.Hash
+	block.generateHash();
 
+	return block;
 }
 
-func (bc *Blockchain)AddBlock(data BookCheckout) {
+func (bc *Blockchain) AddBlock(data BookCheckout) {
 	prevBlock := bc.blocks[len(bc.blocks)-1];
 
 	block := CreateBlock(prevBlock, data);
@@ -95,7 +108,7 @@ func newBook(w http.ResponseWriter, r *http.Request){
 	resp, err := json.MarshalIndent(book, "", " ");
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError);
-		log.Printf("FAILED: JSON Marshall");
+		log.Printf("FAILED: JSON Marshal");
 		w.Write([]byte("Could not save BookID"));
 		return ;
 	}
