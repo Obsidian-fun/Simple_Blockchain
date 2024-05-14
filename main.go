@@ -77,6 +77,17 @@ func (bc *Blockchain) AddBlock(data BookCheckout) {
 	}
 }
 
+
+func (b *Block) validateHash(hash string) bool{
+	b.generateHash();
+
+	if b.Hash != hash {
+		return false;
+	}
+	return true;
+}
+
+
 func validBlock(block *Block, PrevBlock *Block) bool{
 
 	// Check hash matches,
