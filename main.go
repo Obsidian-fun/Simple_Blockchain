@@ -77,10 +77,25 @@ func (bc *Blockchain) AddBlock(data BookCheckout) {
 	}
 }
 
-func validBlock(block *Block, PrevBlock *Block){
-	fmt.Println("Goober");
-}
+func validBlock(block *Block, PrevBlock *Block) bool{
 
+	// Check hash matches,
+	if PrevBlock.Hash != block.PreviousHash {
+		return false;
+	}
+
+	//Validate hash
+	if !block.validateHash(block.Hash){
+		return false;
+	}
+
+	// Check position is correct 
+	if PrevBlock.Pos + 1 != block.Pos  {
+		return false;
+	}
+
+	return true;
+}
 
 
 func writeBlock(w http.ResponseWriter, r *http.Request) {
@@ -139,7 +154,7 @@ func NewBlockchain() *Blockchain {
 
 func main() {
 
-	var Blockchain = NewBlockchain();
+	blockchain = NewBlockchain();
 
 	r := mux.NewRouter();
 	r.HandleFunc("/", getBlockchain).Methods("GET");  // Get all blocks in the blockchain
