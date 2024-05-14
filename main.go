@@ -161,6 +161,16 @@ func main() {
 	r.HandleFunc("/", writeBlock).Methods("POST");    // Write a transaction into a block
 	r.HandleFunc("/new", newBook).Methods("POST");    // Create a new BookID
 
+
+	go func() {
+		for _, block := range blockchain.blocks{
+			fmt.Printf("Previous Hash: %x\n", block.PrevHash);
+			bytes, _ := json.MarshalIndent(block.Data,""," ");
+			fmt.Printf("Data:%v\n");
+		}
+	}
+
+
 	log.Fatal(http.ListenAndServe(":3000",r));
 }
 
